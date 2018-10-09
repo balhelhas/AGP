@@ -1,0 +1,54 @@
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+/* .ng-invalid[touched]:not(form) */
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+
+.state_active {
+    width: 20px;
+    height: 20px;
+    border-radius: 101px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+    margin-left: 18px;
+    background-color: #008000; 
+}
+
+.state_inactive {
+    width: 20px;
+    height: 20px;
+    border-radius: 101px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+    margin-left: 18px;   
+    background-color: #FF0000; 
+}
+
+
+
+.circle-text {
+display: table-cell;
+height: 200px; 
+width: 200px;
+text-align: center;
+vertical-align: middle;
+border-radius: 50%;
+background: #000;
+color: #fff;
+}
+
+.sensor_images {
+    width: 30px;
+    height: 30px;
+}
+
+.row-image {
+    width: 60px;
+    height: 60px;
+}

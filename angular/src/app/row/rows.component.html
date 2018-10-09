@@ -1,0 +1,65 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="page-header">
+			  <h1><img src="images/row-icon.png" class="row-image"> Filas <small>Lista de filas existentes</small></h1>
+			</div>
+			<div class="alert alert-danger text-center" role="alert" *ngIf="existing_rows.length == 0">
+				<h4>Não existem filas inseridas! As filas são adicionadas nas estufas existentes.</h4>
+			</div>
+			<div class="panel panel-default" *ngIf="existing_rows.length != 0">
+				<div class="panel-heading">
+			        <h4>Filtrar filas por:</h4> 
+		        </div>
+		        <div class="panel-body">
+					<div class="row">
+						<div class="col-xs-6 col-md-6">
+							<label>Terreno:</label>
+							<select class="form-control" name="selectLand" [(ngModel)]="selectLand" (ngModelChange)="onSelectLand($event)">
+								<option [ngValue]="null">Todos</option>
+								<option *ngFor="let land of lands" [ngValue]="land">
+									{{land.name}}
+								</option>
+							</select>
+						</div>
+						<div class="col-xs-6 col-md-6" [hidden]="selectedLand == null">
+							<label>Estufa:</label>
+							<select class="form-control" [(ngModel)]="selectGreenhouse" (ngModelChange)="onSelectGreenhouse($event)">
+								<option [ngValue]="null">Todas</option>
+								<option *ngFor="let greenhouse of selectedGreenhouses" [ngValue]="greenhouse">
+									{{greenhouse.name}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<table *ngIf="rows.length > 0" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nome Terreno</th>
+						<th>Nome Estufa</th>
+						<th>Nome Fila</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ng-container *ngFor="let land of lands">
+						<ng-container *ngFor="let greenhouse of greenhouses">
+							<ng-container *ngFor="let row of rows | paginate: {itemsPerPage: 10, currentPage: p}">
+								<tr *ngIf="land._id == greenhouse.land_id && greenhouse._id == row.greenhouse_id">
+									<td routerLinkActivate="active" ><a [routerLink]="['/land', land._id]">{{land.name}}</a></td>
+									<td routerLinkActivate="active" ><a [routerLink]="['/greenhouse', greenhouse._id]">{{greenhouse.name}}</a></td>
+									<td routerLinkActivate="active" ><a [routerLink]="['/row', row._id]">{{row.name}}</a></td>
+								</tr>
+							</ng-container>
+						</ng-container>
+					</ng-container>
+				</tbody>
+			</table>
+			<div class="col-xs-12 col-sm-12 col-sm-offset-3 col-lg-4 col-lg-offset-4" *ngIf="rows.length > 10">
+				<pagination-controls role="button" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Seguinte"></pagination-controls>
+			</div>
+		</div>
+	</div>
+</div>

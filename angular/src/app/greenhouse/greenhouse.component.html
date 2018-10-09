@@ -1,0 +1,74 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="well "><!-- greenhouse-background -->
+				<h1>
+					{{greenhouse.name}}
+					<button class="btn btn-default" (click)="editGreenhouse()">Editar Estufa</button>
+				</h1>
+			</div>
+			<div class="row">
+				<div class="col-sm-7 col-md-8">
+					<div class="panel panel-default">
+				        <div class="panel-heading">
+				          	<h3>Sensores <small>{{greenhouse.name}} </small><button class="btn btn-default" (click)="createSensor()" >Adicionar Sensor</button></h3> 
+				        </div>
+				        <div class="panel-body">
+				        	<div class="alert alert-danger" role="alert" *ngIf="greenhouseSensors.length == 0">A estufa não tem sensores inseridos!</div>
+				        	<div class="alert alert-warning" role="alert" *ngIf="measures.length == 0 && greenhouseSensors.length != 0">Não existem medições recentes!</div>
+				        	<div class="row" *ngIf="measures.length == greenhouseSensors.length">
+				        		<ng-container *ngFor="let sensor of greenhouseSensors">
+									<div class="col-sm-6 col-md-4 text-center" >
+	        							<div class="panel panel-default" (click)="sensorPage(sensor._id)" role="button">
+											<div class="panel-body">
+												<ng-container *ngFor="let measure of measures">
+													<div *ngIf="sensor._id == measure.sensor_id">
+						               					<h4>Sensor {{sensor.identificator}}</h4>
+						               					<h3><img src="{{sensor.image_path}}" class="sensor_images"> {{sensor.measure_variable}}</h3>
+							        					<h2 *ngIf="sensor.measure_variable == 'Condutividade'"> {{measure.value}} <span>&#181;</span>{{sensor.measure_unit}}</h2>
+							        					<h2 *ngIf="sensor.measure_variable != 'Condutividade'"> {{measure.value}} {{sensor.measure_unit}}</h2>
+							        					<h4>{{measure.date | date: 'dd-MM-yyyy'}} {{measure.date | date: 'hh:mm'}}</h4>
+							        				</div>
+				  								</ng-container>
+			  								</div>
+		  								</div>
+	        						</div>
+	  							</ng-container>
+				        	</div>
+				        </div>
+				    </div>
+				</div>
+				<div class="col-sm-5 col-md-4">
+					<div class="panel panel-default">
+				        <div class="panel-heading">
+				          	<h3>Filas <small>{{greenhouse.name}} </small><button  class="btn btn-default" (click)="createRow()" >Adicionar Fila</button></h3>
+				        </div>
+				        <div class="panel-body">
+				       		<div class="alert alert-danger" role="alert" *ngIf="rows.length == 0">A estufa não tem filas inseridas!</div>
+				        	<table class="table table-striped" *ngIf="rows.length > 0">
+								<thead>
+									<tr class="text-center">
+										<th>Fila</th>
+										<th>Sensores</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let row of rows" >
+										<td routerLinkActivate="active" ><a [routerLink]="['/row', row._id]">{{row.name}}</a></td>
+										<td>
+											<ng-container *ngFor="let sensor of countSensors">
+												<ng-container *ngIf="sensor.id == row._id">
+													{{sensor.count}}
+												</ng-container>
+											</ng-container>
+										</td>
+									</tr>
+								</tbody>
+							</table> 
+				        </div>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

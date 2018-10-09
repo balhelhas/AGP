@@ -1,0 +1,43 @@
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+/* .ng-invalid[touched]:not(form) */
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.well {
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+  line-height: 200px;
+  border-radius: 20%; /* the magic */
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0 auto 40px;
+  background-color: #3498db;  
+}
+
+.greenhouse {
+  width: 90px;
+  height: 40px;
+}
+
+.greenhouse-background {
+  background:   url(images/greenhouse-cut.jpg);
+  background-size:  850px
+}
+
+
+.sensor_images{
+  width: 30px;
+  height: 30px;
+}

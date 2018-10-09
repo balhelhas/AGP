@@ -1,0 +1,38 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <label class="navbar-brand">AGP</label>
+            <img class="navbar-brand" src="favicon.ico">
+        </div>
+        <div class="collapse navbar-collapse" id="navigation">
+            <ul class="nav navbar-nav navbar-left">
+                <li *ngIf="auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/home">Inicio<span class="sr-only"></span></a></li>
+                <li *ngIf="auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/sensors">Sensores</a></li>
+                <li *ngIf="auth.isLoggedIn()" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gerir <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li *ngIf="auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/lands">Terrenos</a></li>
+                        <li *ngIf="auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/greenhouses">Estufas</a></li>
+                        <li *ngIf="auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/rows">Filas</a></li>
+                        <li *ngIf="auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/plants">Plantas</a></li>
+                    </ul>
+                </li>
+                <li routerLinkActivate="active"><a routerLink="/about">Sobre</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li *ngIf="!auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/login">Entrar</a></li>
+                <li *ngIf="auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/profile">{{this.auth.currentUser.username}}</a></li>
+                <li *ngIf="auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/home" (click)="logout()">Sair</a></li>
+                <li *ngIf="!auth.isLoggedIn()" routerLinkActivate="active"><a routerLink="/register">Registar</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>

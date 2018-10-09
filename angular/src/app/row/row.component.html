@@ -1,0 +1,81 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="well">
+				<h1>{{row.name}} <button class="btn btn-default" (click)="editRow()">Editar Fila</button></h1>
+			</div>
+			<div class="row">
+				<div class="col-sm-4 col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+				          	<h3>Sensores <small>{{row.name}} </small><button  class="btn btn-default" (click)="createSensor()">Adicionar Sensor</button></h3>
+				        </div>
+				        <div class="panel-body">
+				        	<div class="alert alert-danger" role="alert" *ngIf="sensors.length == 0">A fila não tem sensores inseridos!</div>
+				        	<div class="alert alert-warning" role="alert" *ngIf="measures.length == 0 && sensors.length != 0">Não existem medições recentes!</div>
+				        	<div class="row" *ngIf="measures.length > 0">
+	        					<ng-container *ngFor="let sensor of sensors" >
+	        						<div class="col-md-12 text-center" >
+										<ng-container *ngFor="let measure of measures">
+											<div *ngIf="sensor._id == measure.sensor_id">
+												<div  role="button" class="panel panel-default" (click)="sensorPage(sensor._id)">
+													<div class="panel-body">
+						               					<h4>Sensor {{sensor.identificator}}</h4>
+						               					<h3><img src="{{sensor.image_path}}" class="sensor_images"> {{sensor.measure_variable}}</h3>
+							        					<h2 *ngIf="sensor.measure_variable == 'Condutividade'"> {{measure.value}} <span>&#181;</span>{{sensor.measure_unit}}</h2>
+							        					<h2 *ngIf="sensor.measure_variable != 'Condutividade'"> {{measure.value}} {{sensor.measure_unit}}</h2>
+							        					<h4>{{measure.date | date: 'dd-MM-yyyy'}} {{measure.date | date: 'hh:mm'}}</h4>
+							        				</div>
+						        				</div>
+					        				</div>
+		  								</ng-container>
+	        						</div>
+	  							</ng-container>
+				        	</div>			
+				        </div>
+				    </div>
+				</div>
+				<div class="col-sm-8 col-md-8">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+				          	<h3>Plantações <small>{{row.name}} </small><button class="btn btn-default" (click)="createPlantation()">Adicionar Plantação</button> </h3> 
+				        </div>
+				        <div class="panel-body">
+				        	<div class="alert alert-danger" role="alert" *ngIf="plantations.length == 0">A fila não tem plantações inseridas!</div>
+				        	<table class="table table-striped" *ngIf="plantations.length > 0">
+								<thead>
+									<tr>
+										<th>Estado</th>
+										<th>Data de Iniciação</th>
+										<th>Data de Finalização</th>
+										<th>Plantas Produzidas</th>
+										<th>Opções</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let plantation of plantations | paginate: {itemsPerPage: 5, currentPage: platantion_page}" >
+										<td *ngIf="plantation.state==true"><span class="state_active"></span></td>
+										<td *ngIf="plantation.state==false"><span class="state_inactive"></span></td>
+										<td>{{plantation.start_date.jsdate | date: 'dd-MM-yyyy'}}</td>
+										<td>{{plantation.end_date.jsdate | date: 'dd-MM-yyyy'}}</td>
+										<td>
+											<ng-container *ngFor="let plant of plantation.plants_produced">
+												{{plant.popular_name}}
+											</ng-container>
+										</td>
+										<td>
+											<button class="btn btn-warning" (click)="editPlantation(plantation)" [disabled]="plantation.state == false">Editar Plantação</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="col-xs-12 col-sm-6 col-sm-offset-4 col-lg-6 col-lg-offset-3" *ngIf="plantations.length > 5">
+								<pagination-controls role="button" (pageChange)="platantion_page = $event" previousLabel="Anterior" nextLabel="Seguinte"></pagination-controls>
+							</div>
+				        </div>
+				    </div>
+				</div>				
+			</div>
+		</div>
+	</div>
+</div>

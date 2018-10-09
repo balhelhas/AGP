@@ -1,0 +1,65 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6 col-lg-6">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h1>
+					{{land.name}}
+					<small *ngIf="land.state == true" class="active-state">Ativo</small> 
+					<small *ngIf="land.state != true" class="inactive-state">Desativado</small>
+					<button *ngIf="land.state == true" class="btn btn-danger" (click)="disableLand()">Desativar</button> 
+					<button *ngIf="land.state != true" class="btn btn-success" (click)="enableLand()">Ativar</button> 
+					<button class="btn btn-default" (click)="editLand()">Editar Terreno</button>
+					</h1>
+					<h3>Endereço: {{land.address}}</h3>
+					<h3>Codigo Postal: {{land.zip_code}}</h3>
+					<h3>Localidade: {{land.location}}</h3>
+					<div *ngIf="land.description != ''">
+						<h3>Descrição:</h3>
+						<h3>{{land.description}}</h3>
+					</div>
+				</div>
+			</div>
+			<weather [land_id]="land_id"></weather>
+		</div>
+		<div class="col-sm-6 col-lg-6">
+			<div class="panel panel-default">
+		        <div class="panel-heading">
+		          	<h3>Estufas <button class="btn btn-default" (click)="createGreenhouse()" [disabled]="land.state == false">Adicionar Estufa</button></h3>
+		        </div>
+		        <div class="panel-body">
+		        	<div class="alert alert-danger" role="alert" *ngIf="greenhouses.length == 0">O terreno não tem estufas inseridas!</div>
+		        	<table class="table table-striped" *ngIf="greenhouses.length > 0">
+						<thead>
+							<tr>
+								<th>Estufa</th>
+								<th>Filas</th>
+								<th>Sensores</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let greenhouse of greenhouses" >
+								<td routerLinkActivate="active" *ngIf="land.state == true"><a [routerLink]="['/greenhouse', greenhouse._id]" >{{greenhouse.name}}</a></td>
+								<td *ngIf="land.state == false">{{greenhouse.name}}</td>
+								<td>
+									<ng-container *ngFor="let rows of countRows">
+										<ng-container *ngIf="rows.id == greenhouse._id">
+											{{rows.count}}
+										</ng-container>
+									</ng-container>
+								</td>
+								<td>
+									<ng-container *ngFor="let sensors of countSensors">
+										<ng-container *ngIf="sensors.id == greenhouse._id">
+											{{sensors.count}}
+										</ng-container>
+									</ng-container>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>

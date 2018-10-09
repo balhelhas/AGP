@@ -1,0 +1,52 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+		        <div class="panel-heading">
+		          <h3 class="panel-title">Editar Planta</h3>
+		        </div>
+		        <div class="panel-body">
+		          <div class="col-lg-12">
+		            <form (ngSubmit)="editPlant()" #editPlantForm="ngForm" class="form-horizontal">
+			            <div class="form-group">
+			            	<label for="popular_name">Nome popular: </label>
+			            	<input type="text" class="form-control" id="popular_name" name="popular_name" required [(ngModel)]="model.popular_name" #popular_name="ngModel">
+			            	<div *ngIf="popular_name.errors && (popular_name.dirty || popular_name.touched)" class="alert alert-danger">
+			            		<div [hidden]="!popular_name.errors.required">
+			                    	É obrigatório inserir o nome popular da planta produzida!
+			                    </div>
+			            	</div>
+			            </div>
+			            <div class="form-group">
+			            	<label for="scientific_name">Nome cientifico:</label>
+			            	<input type="text" class="form-control" id="scientific_name" name="scientific_name" required [(ngModel)]="model.scientific_name" #scientific_name="ngModel">
+			            	<div *ngIf="scientific_name.errors && (scientific_name.dirty || scientific_name.touched)" class="alert alert-danger">
+			            		<div [hidden]="!scientific_name.errors.required">
+			            			É obrigatório inserir o nome cientifico da espécie produzida!
+			            		</div>
+			            	</div>
+			            </div>
+			            <div class="form-group">
+			            	<label for="color">Cor:</label>
+			            	<input type="text" class="form-control" id="color" name="color" required [(ngModel)]="model.color" #color="ngModel">
+			            	<div *ngIf="color.errors && (color.dirty || color.touched)" class="alert alert-danger">
+			            		<div [hidden]="!color.errors.required">
+			            			A cor da espécie é obrigatória!
+			            		</div>
+			            	</div>
+			            </div>
+			            <div class="form-group">
+							<label for="description">Descrição:</label>
+							<textarea class="form-control" id="description" name="description" [(ngModel)]="model.description" #description="ngModel"></textarea>
+			            </div>
+			            <div class="form-group">
+			            	<button type="submit" class="btn btn-warning" [disabled]="!editPlantForm.form.valid">Editar</button>
+			            	<button class="btn btn-danger" (click)="cancelEdit()">Cancelar</button>
+			            </div>
+		            </form>
+		          </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>

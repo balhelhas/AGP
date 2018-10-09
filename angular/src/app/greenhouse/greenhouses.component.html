@@ -1,0 +1,52 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="page-header">
+			  	<h1><img src="images/greenhouse-icon.png" class="greenhouse"> Estufas <small>Lista das estufas existentes</small></h1>
+			</div>
+			<div class="alert alert-danger text-center" role="alert" *ngIf="existing_greenhouses.length == 0">
+				<h4>Não existem estufas inseridas! Estufas são inseridas nos terrenos existentes.</h4>
+			</div>
+			<div class="panel panel-default" *ngIf="existing_greenhouses.length != 0">
+				<div class="panel-heading">
+			        <h4>Filtrar estufas por:</h4> 
+		        </div>
+		        <div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-md-12">
+							<label>Terreno:</label>
+							<select class="form-control" name="selectLand" [(ngModel)]="selectLand" (ngModelChange)="onSelectLand($event)">
+								<option [ngValue]="null">Todos</option>
+								<option *ngFor="let land of lands" [ngValue]="land">
+									{{land.name}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<table *ngIf="greenhouses.length > 0" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nome Terreno</th>
+						<th>Nome Estufa</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ng-container *ngFor="let land of lands">
+						<ng-container *ngFor="let greenhouse of greenhouses | paginate: {itemsPerPage: 10, currentPage: p}">
+							<tr *ngIf="greenhouse.land_id == land._id">
+								<td routerLinkActivate="active" ><a [routerLink]="['/land', land._id]">{{land.name}}</a></td>
+								<td routerLinkActivate="active" ><a [routerLink]="['/greenhouse', greenhouse._id]">{{greenhouse.name}}</a></td>
+							</tr>
+						</ng-container>
+					</ng-container>
+				</tbody>
+			</table>
+			<div class="col-xs-12 col-sm-12 col-sm-offset-3 col-lg-4 col-lg-offset-4" *ngIf="greenhouses.length > 10">
+				<pagination-controls role="button" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Seguinte"></pagination-controls>
+			</div>
+		</div>
+	</div>
+</div>

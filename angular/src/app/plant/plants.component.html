@@ -1,0 +1,38 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="page-header">
+			  <h1><img src="images/plant-icon.png" class="plant"> Plantas <small>Lista das plantas produzidas </small><button class="btn btn-default" routerLinkActivate="active" routerLink="/plant/new">Adicionar Planta</button></h1>
+			</div>
+			<div class="alert alert-danger text-center" role="alert" *ngIf="plants.length == 0">
+				<h4>Não existem plantas inseridas! Adicione uma nova planta nesta página.</h4>
+			</div>
+			<table *ngIf="plants.length > 0" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nome Popular</th>
+						<th>Nome Cientifico</th>
+						<th>Cor</th>
+						<th>Descrição</th>
+						<th>Opções</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let plant of plants | paginate: {itemsPerPage: 5, currentPage: p}" >
+						<td>{{plant.popular_name}}</td>
+						<td>{{plant.scientific_name}}</td>
+						<td>{{plant.color}}</td>
+						<td>{{plant.description}}</td>
+						<td>
+							<button class="btn btn-warning" (click)="editPlant(plant)">Editar</button>
+							<button class="btn btn-danger" (click)="deletePlant(plant)">Remover</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="col-xs-12 col-sm-12 col-sm-offset-3 col-lg-4 col-lg-offset-4" *ngIf="plants.length > 5">
+				<pagination-controls role="button" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Seguinte"></pagination-controls>
+			</div>
+		</div>
+	</div>
+</div>

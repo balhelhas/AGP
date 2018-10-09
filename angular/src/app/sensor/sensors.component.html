@@ -1,0 +1,87 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="page-header">
+			  <h1><img src="images/sensor-icon.png" class="sensor"> Sensores <small>Lista de sensores existentes</small></h1>
+			</div>
+			<div class="alert alert-danger text-center" role="alert" *ngIf="sensors.length == 0">
+				<h4>Não existem sensores inseridos! Os sensores são adicionados a estufas e filas já inseridas.</h4>
+			</div>
+			<div class="panel panel-default" *ngIf="sensors.length > 0">
+				<div class="panel-heading">
+			        <h4>Filtrar sensores por:</h4> 
+		        </div>
+		        <div class="panel-body">
+					<div class="row">
+						<div class="col-xs-4 col-md-4">
+							<label>Terreno:</label>
+							<select class="form-control" name="selectLand" [(ngModel)]="selectLand" (ngModelChange)="onSelectLand($event)">
+								<option [ngValue]="null">Todos</option>
+								<option *ngFor="let land of lands" [ngValue]="land">
+									{{land.name}}
+								</option>
+							</select>
+						</div>
+						<div class="col-xs-4 col-md-4" [hidden]="selectedLand == null">
+							<label>Estufa:</label>
+							<select class="form-control" [(ngModel)]="selectGreenhouse" (ngModelChange)="onSelectGreenhouse($event)">
+								<option [ngValue]="null">Todas</option>
+								<option *ngFor="let greenhouse of filteredGreenhouses" [ngValue]="greenhouse">
+									{{greenhouse.name}}
+								</option>
+							</select>
+						</div>
+						<div class="col-xs-4 col-md-4" [hidden]="selectedGreenhouse == null">
+							<label>Fila:</label>
+							<select class="form-control" [(ngModel)]="selectRow" (ngModelChange)="onSelectRow($event)">
+								<option [ngValue]="null">Todos</option>
+								<ng-container *ngFor="let row of filteredRows">
+									<option [ngValue]="row">
+										<ng-container *ngIf="row.name == '0'">
+										Só estufa
+										</ng-container>
+										<ng-container *ngIf="row.name != '0'">
+										{{row.name}}
+										</ng-container>
+									</option>
+								</ng-container>
+							</select>
+						</div>
+					</div>
+		        </div>
+			</div>
+			<table *ngIf="filteredSensors.length > 0" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Terreno</th>
+						<th>Estufa</th>
+						<th>Fila</th>
+						<th>Sensor</th>
+						<th>Estado</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ng-container *ngFor="let land of lands">
+						<ng-container *ngFor="let greenhouse of greenhouses">
+							<ng-container *ngFor="let row of rows">
+								<ng-container *ngFor="let sensor of filteredSensors | paginate: {itemsPerPage: 10, currentPage: p}">
+									<tr *ngIf="land._id == greenhouse.land_id && greenhouse._id == row.greenhouse_id && row._id == sensor.row_id">
+										<td routerLinkActivate="active" ><a [routerLink]="['/land', land._id]">{{land.name}}</a></td>
+										<td routerLinkActivate="active" ><a [routerLink]="['/greenhouse', greenhouse._id]">{{greenhouse.name}}</a></td>
+										<td routerLinkActivate="active" *ngIf="row.name!=0"><a [routerLink]="['/row', row._id]">{{row.name}}</a></td>
+										<td *ngIf="row.name==0"></td>
+										<td routerLinkActivate="active" ><a [routerLink]="['/sensor', sensor._id]">{{sensor.identificator}}</a></td>
+										<td *ngIf="sensor.state == true"><span class="state_active"></span></td>
+										<td *ngIf="sensor.state == false"><span class="state_inactive"></span></td>
+									</tr>
+								</ng-container>
+							</ng-container>
+						</ng-container>
+					</ng-container>
+				</tbody>
+			</table>
+			<div class="col-xs-12 col-sm-12 col-sm-offset-3 col-lg-4 col-lg-offset-4" *ngIf="sensors.length > 10">
+				<pagination-controls role="button" (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Seguinte"></pagination-controls>
+			</div>
+		</div>
+	</div>

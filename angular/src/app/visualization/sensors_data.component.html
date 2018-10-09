@@ -1,0 +1,117 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3 text-center" *ngIf="lands.length == 0">
+		<h1>Bem-vindo ao AGP</h1>
+	</div>
+	<ng-container *ngFor="let land of lands">
+		<div class="col-md-6 col-md-offset-3" *ngIf="lands.length == 1">
+			<h1 class="text-center">{{land.name}}</h1>
+			<weather [land_id]="land._id"></weather>
+			<h2>Estufas <small>{{land.name}}</small></h2>
+			<accordion [closeOthers]="oneAtATime">
+				<ng-container *ngFor="let greenhouse of greenhouses">
+					<ng-container *ngIf="greenhouse.land_id == land._id">
+						<accordion-group heading="{{greenhouse.name}}">
+							<ul class="list-group">
+								<ng-container *ngFor="let row of greenhSensorRow">
+									<ng-container *ngIf="row.greenhouse_id == greenhouse._id">
+										<ng-container *ngFor="let sensor of greenhSensors">
+											<ng-container *ngIf="sensor.row_id == row._id">
+												<ng-container *ngFor="let measure of greenhouse_measures">
+													<li class="list-group-item" *ngIf="measure.sensor_id == sensor._id" (click)="sensorPage(sensor)" role="button">
+														
+														<h4>Sensor {{sensor.identificator}}</h4>
+														<h3 *ngIf="sensor.measure_variable == 'Condutividade'"><img src="{{sensor.image_path}}" class="sensor-images"> {{sensor.measure_variable}} {{measure.value}} <span>&#181;</span>{{sensor.measure_unit}}</h3>
+														<h3 *ngIf="sensor.measure_variable != 'Condutividade'"><img src="{{sensor.image_path}}" class="sensor-images"> {{sensor.measure_variable}} {{measure.value}} {{sensor.measure_unit}}</h3>
+														{{measure.date | date: 'dd-MM-yyyy'}} {{measure.date | date: 'hh:mm'}}
+													</li>
+												</ng-container>
+											</ng-container>
+										</ng-container>
+									</ng-container>
+								</ng-container>
+							</ul>
+							<h2>Filas <small>{{greenhouse.name}}</small></h2>
+							<accordion [closeOthers]="oneAtATime">
+								<ng-container *ngFor="let row of rows">
+									<ng-container *ngIf="row.greenhouse_id == greenhouse._id">
+									  	<accordion-group heading="{{row.name}}">
+									  		<ul class="list-group">
+												<ng-container *ngFor="let sensor of rowSensors">
+													<ng-container *ngIf="sensor.row_id == row._id">
+														<ng-container *ngFor="let measure of row_measures">
+															<li class="list-group-item" *ngIf="measure.sensor_id == sensor._id" (click)="sensorPage(sensor)" role="button">
+																<h4>Sensor {{sensor.identificator}}</h4>
+																<h3 *ngIf="sensor.measure_variable == 'Condutividade'"><img src="{{sensor.image_path}}" class="sensor-images"> {{sensor.measure_variable}} {{measure.value}} <span>&#181;</span>{{sensor.measure_unit}}</h3>
+																<h3 *ngIf="sensor.measure_variable != 'Condutividade'"><img src="{{sensor.image_path}}" class="sensor-images"> {{sensor.measure_variable}} {{measure.value}} {{sensor.measure_unit}}</h3>
+																{{measure.date | date: 'dd-MM-yyyy'}} {{measure.date | date: 'hh:mm'}}
+															</li>
+														</ng-container>
+													</ng-container>
+												</ng-container>
+											</ul>
+									  	</accordion-group>
+									</ng-container>
+								</ng-container>											
+							</accordion>
+						</accordion-group>
+					</ng-container>
+				</ng-container>
+			</accordion>
+		</div>
+		<div class="col-md-6" *ngIf="lands.length > 1">
+			<h1 class="text-center">{{land.name}}</h1>
+			<weather [land_id]="land._id"></weather>
+			<h2>Estufas <small>{{land.name}}</small></h2>
+			<accordion [closeOthers]="oneAtATime">
+				<ng-container *ngFor="let greenhouse of greenhouses">
+					<ng-container *ngIf="greenhouse.land_id == land._id">
+						<accordion-group heading="{{greenhouse.name}}">
+							<ul class="list-group">
+								<ng-container *ngFor="let row of greenhSensorRow">
+									<ng-container *ngIf="row.greenhouse_id == greenhouse._id">
+										<ng-container *ngFor="let sensor of greenhSensors">
+											<ng-container *ngIf="sensor.row_id == row._id">
+												<ng-container *ngFor="let measure of greenhouse_measures">
+													<li class="list-group-item" *ngIf="measure.sensor_id == sensor._id" (click)="sensorPage(sensor)" role="button">
+														
+														<h4>Sensor {{sensor.identificator}}</h4>
+														<h3 *ngIf="sensor.measure_variable == 'Condutividade'"><img src="{{sensor.image_path}}" class="sensor-images"> {{sensor.measure_variable}} {{measure.value}} <span>&#181;</span>{{sensor.measure_unit}}</h3>
+														<h3 *ngIf="sensor.measure_variable != 'Condutividade'"><img src="{{sensor.image_path}}" class="sensor-images"> {{sensor.measure_variable}} {{measure.value}} {{sensor.measure_unit}}</h3>
+														{{measure.date | date: 'dd-MM-yyyy'}} {{measure.date | date: 'hh:mm'}}
+													</li>
+												</ng-container>
+											</ng-container>
+										</ng-container>
+									</ng-container>
+								</ng-container>
+							</ul>
+							<h2>Filas <small>{{greenhouse.name}}</small></h2>
+							<accordion [closeOthers]="oneAtATime">
+								<ng-container *ngFor="let row of rows">
+									<ng-container *ngIf="row.greenhouse_id == greenhouse._id">
+									  	<accordion-group heading="{{row.name}}">
+									  		<ul class="list-group">
+												<ng-container *ngFor="let sensor of rowSensors">
+													<ng-container *ngIf="sensor.row_id == row._id">
+														<ng-container *ngFor="let measure of row_measures">
+															<li class="list-group-item" *ngIf="measure.sensor_id == sensor._id" (click)="sensorPage(sensor)" role="button">
+																<h4>Sensor {{sensor.identificator}}</h4>
+																<h3 *ngIf="sensor.measure_variable == 'Condutividade'"><img src="{{sensor.image_path}}" class="sensor-images"> {{sensor.measure_variable}} {{measure.value}} <span>&#181;</span>{{sensor.measure_unit}}</h3>
+																<h3 *ngIf="sensor.measure_variable != 'Condutividade'"><img src="{{sensor.image_path}}" class="sensor-images"> {{sensor.measure_variable}} {{measure.value}} {{sensor.measure_unit}}</h3>
+																{{measure.date | date: 'dd-MM-yyyy'}} {{measure.date | date: 'hh:mm'}}
+															</li>
+														</ng-container>
+													</ng-container>
+												</ng-container>
+											</ul>
+									  	</accordion-group>
+									</ng-container>
+								</ng-container>											
+							</accordion>
+						</accordion-group>
+					</ng-container>
+				</ng-container>
+			</accordion>
+		</div>
+	</ng-container>
+</div>

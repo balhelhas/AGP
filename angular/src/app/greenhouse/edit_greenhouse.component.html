@@ -1,0 +1,33 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+		        <div class="panel-heading">
+		          	<h3 class="panel-title">Editar Estufa</h3>
+		        </div>
+		        <div class="panel-body">
+		          	<div class="col-lg-12">
+			            <form (ngSubmit)="editGreenhouse()" #editGreenhouseForm="ngForm" class="form-horizontal">
+				            <div class="form-group">
+					            <label for="name">Nome da estufa: </label>
+								<input type="text" class="form-control" id="name" name="name" placeholder="Estufa 1, Estufa X, etc ..." required [(ngModel)]="model.name" #name="ngModel">
+						    	<div *ngIf="name.errors && (name.dirty || name.touched)" class="alert alert-danger">
+						    		<div [hidden]="!name.errors.required">
+						            	O nome da estufa é obrigatório!
+						            </div>
+						    	</div>
+						    	<div *ngIf="greenhouseNameTaken" class="alert alert-danger" [hidden]="!greenhouseNameTaken">
+							        O nome da estufa já existe!
+						        </div>
+						    </div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-warning" [disabled]="!editGreenhouseForm.form.valid">Editar</button>
+								<button class="btn btn-danger" (click)="cancelEdit()">Cancelar</button>
+						    </div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

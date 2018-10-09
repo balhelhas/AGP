@@ -1,0 +1,64 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12 col-sm-12">
+			<div class="well">
+				<h1><img src="{{sensor.image_path}}" class="sensor_page"> Sensor {{sensor.identificator}} <button class="btn btn-default" (click)="editSensor()">Editar Sensor</button></h1>
+				<div class="row">
+					<div class="col-lg-8">
+						<h3>Variavel de Medição: {{sensor.measure_variable}}</h3>
+						<h3 *ngIf="sensor.measure_variable == 'Condutividade'">Unidade de Medição: <span>&#181;</span>{{sensor.measure_unit}}</h3>
+						<h3 *ngIf="sensor.measure_variable != 'Condutividade'">Unidade de Medição: {{sensor.measure_unit}}</h3>
+						<div *ngIf="sensor.description != ''">
+							<h3>Descrição:</h3>
+							<h4>{{sensor.description}}</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="alert alert-danger text-center col-lg-12 col-sm-12" role="alert" *ngIf="measures.length == 0">
+				<h4>Não existem medições efetuadas com este sensor!</h4>
+			</div>
+			<div class="row">	
+				<div class="col-lg-5 col-sm-12" *ngIf="measures.length > 0">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+					          <h3>Medições</h3> 
+					    </div>
+					    <div class="panel-body">
+							<table class="table table-striped" *ngIf="measures.length > 0">
+								<thead>
+									<tr>
+										<th>Data</th>
+										<th>Hora</th>
+										<th>Valor</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let measure of measures | paginate: {itemsPerPage: 10, currentPage: p}" >
+										<td>{{measure.date | date: 'dd-MM-yyyy'}}</td>
+										<td>{{measure.date | date: 'hh:mm'}}</td>
+										<td *ngIf="sensor.measure_variable == 'Condutividade'">{{measure.value}} <span>&#181;</span>{{sensor.measure_unit}}</td>
+										<td *ngIf="sensor.measure_variable != 'Condutividade'">{{measure.value}} {{sensor.measure_unit}}</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="col-lg-12" *ngIf="measures.length > 10">
+								<pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Seguinte"></pagination-controls>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-7 col-sm-12" *ngIf="measures.length > 0">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+					        <h3>Gráfico de Medições</h3> 
+					    </div>
+					    <div class="panel-body">
+					    	<chart [options]="options"></chart>
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

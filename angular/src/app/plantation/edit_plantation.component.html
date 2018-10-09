@@ -1,0 +1,48 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+		        <div class="panel-heading">
+		          <h3 class="panel-title">Editar Plantação</h3>
+		        </div>
+		        <div class="panel-body">
+		          <div class="col-lg-12">
+		            <form (ngSubmit)="editPlantation()" #editPlantationForm="ngForm" class="form-horizontal">
+			            <div class="form-group">
+			            	<label for="start_date">Data Inicio: </label>
+			            	<my-date-picker name="start_date" [(ngModel)]="model.start_date" [options]="myDatePickerOptions" (dateChanged)="onStartDateChanged($event)" required disabled></my-date-picker>
+			            </div>
+			            <div class="form-group">
+			            	<label for="end_date">Data Fim: </label>
+			            	<my-date-picker name="end_date" [(ngModel)]="model.end_date" [options]="myDatePickerOptions" (dateChanged)="onEndDateChanged($event)" required></my-date-picker>
+			            </div>
+			            <div class="form-group">
+				            <div *ngIf="wrongDates" class="alert alert-danger" [hidden]="!wrongDates">
+		                    	A data de fim é menor ou igual a data de inicio!
+		                    </div>
+	                   	</div>
+	                   	<div class="form-group">
+	                   		<label for="plants_produced">Insira plantas a produzir:</label>
+			            	<select class="form-control" id="plants_produced" name="plants_produced"  multiple required [(ngModel)]="plantation_plants" #plants_produced="ngModel" (change)="onSelectPlants($event)">
+			            		<option *ngFor="let plant of plants" [ngValue]="plant">
+			            			{{plant.popular_name}}
+			            		</option>
+			            	</select>
+	                   	</div>
+	                   	<div class="form-group">
+	                   		<div *ngIf="plants.length == 0" class="alert alert-danger">
+		                    	Não existem plantas, é necessário adicionar plantas de produção para serem escolhidas!
+		                    </div>
+	                   	</div>
+	                   		
+			            <div class="form-group">
+			            	<button type="submit" class="btn btn-warning" [disabled]="!editPlantationForm.form.valid || model.start_date == null || model.end_date == null || wrongDates == true">Editar</button>
+			            	<button class="btn btn-danger" (click)="cancelCreate()">Cancelar</button>
+			            </div>
+		            </form>
+		          </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>
